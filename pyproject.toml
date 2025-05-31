@@ -1,0 +1,12 @@
+[project]
+name = "ip-visualize"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy==2.2.6",
+    "pandas==2.2.3",
+    "folium==0.19.5",
+    "geoip2==5.1.0",
+]
