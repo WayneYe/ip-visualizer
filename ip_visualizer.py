@@ -12,7 +12,6 @@ import folium
 from folium.plugins import HeatMap
 import geoip2.database
 from collections import defaultdict
-import os
 
 
 def load_ip_data(csv_file):
@@ -40,7 +39,8 @@ def get_ip_locations(ip_addresses):
                     if lat and lon:
                         locations.append([lat, lon])
                         ip_counts[(lat, lon)] += 1
-                except:
+                except Exception as e:
+                    print(f"Error looking up IP {ip}: {str(e)}")
                     continue
     except FileNotFoundError:
         print("Error: GeoLite2-City.mmdb not found. Please download it from MaxMind.")
