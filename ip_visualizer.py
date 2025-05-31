@@ -65,7 +65,7 @@ def create_heatmap(locations, ip_counts):
 
 
 def main():
-    csv_file = "EUW-ClientIPs-Past-6-days.csv"
+    csv_file = "path_to_my_csv_file.csv"
 
     # Load IP addresses
     ip_addresses = load_ip_data(csv_file)
