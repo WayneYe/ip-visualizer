@@ -67,9 +67,8 @@ def create_heatmap(locations, ip_counts):
 
 
 def main():
-    csv_file = "path_to_my_csv_file.csv"
-
-    # Load IP addresses
+    # Load IP addresses from CSV
+    # csv_file = "path_to_my_csv_file.csv"
     # ip_addresses = load_ip_data(csv_file)
     # Remove ":[port]" from the IP addresses
     # ip_addresses = [ip.split(":")[0] for ip in ip_addresses]

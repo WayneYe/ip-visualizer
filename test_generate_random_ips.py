@@ -1,7 +1,7 @@
 import pytest
 import ipaddress
 from generate_random_ips import generate_random_ip, generate_ip_list
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 
 def test_generate_random_ip_with_standard_network():

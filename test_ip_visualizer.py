@@ -1,8 +1,4 @@
 import pytest
-import pandas as pd
-import folium
-import io
-import sys
 from unittest.mock import patch, MagicMock, mock_open
 from ip_visualizer import load_ip_data, get_ip_locations, create_heatmap
 
