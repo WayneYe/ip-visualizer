@@ -12,13 +12,14 @@ import folium
 from folium.plugins import HeatMap
 import geoip2.database
 from collections import defaultdict
+from generate_random_ips import generate_ip_list
 
 
 def load_ip_data(csv_file):
     """Load IP addresses from CSV file."""
     print("Loading data from CSV...")
     df = pd.read_csv(csv_file)
-    return df["_source.cg\.detail\.remote_addr"].dropna().unique()
+    return df["_source.cg.detail.remote_addr"].dropna().unique()
 
 
 def get_ip_locations(ip_addresses):
@@ -68,9 +69,10 @@ def main():
     csv_file = "path_to_my_csv_file.csv"
 
     # Load IP addresses
-    ip_addresses = load_ip_data(csv_file)
+    # ip_addresses = load_ip_data(csv_file)
     # Remove ":[port]" from the IP addresses
-    ip_addresses = [ip.split(":")[0] for ip in ip_addresses]
+    # ip_addresses = [ip.split(":")[0] for ip in ip_addresses]
+    ip_addresses = generate_ip_list(total_ips=100)
     print(f"Found {len(ip_addresses)} unique IP addresses")
 
     # Convert IPs to locations

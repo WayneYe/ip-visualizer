@@ -13,3 +13,8 @@ dependencies = [
     "folium==0.19.5",
     "geoip2==5.1.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
