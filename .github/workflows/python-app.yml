@@ -23,6 +23,8 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
+    - name: Install dependencies
+      run: pip install -r requirements-dev.txt
     - name: ruff-action
       # You may pin to the exact commit or the version.
       # uses: astral-sh/ruff-action@eaf0ecdd668ceea36159ff9d91882c9795d89b49
@@ -35,12 +37,11 @@ jobs:
         # The version of Ruff to use, e.g., `0.6.0` Defaults to the version in pyproject.toml or 'latest'.
         # version: # optional, default is 
         # Path to a pyproject.toml or requirements.txt file to read the version from.
-        # version-file: # optional
+        version-file: pyproject.toml
         # The checksum of the ruff version to install
         # checksum: # optional
         # Used to increase the rate limit when retrieving versions and downloading ruff.
         # github-token: # optional, default is ${{ github.token }}
-          
     - name: Test with pytest
       run: |
         make test-cov
