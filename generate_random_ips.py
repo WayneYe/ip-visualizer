@@ -229,6 +229,6 @@ if __name__ == "__main__":
 
     # Print the generated IP addresses
     for i, ip in enumerate(ip_list):
-        print(f"{i+1}. {ip}")
+        print(f"{i + 1}. {ip}")
 
     print(f"\nGenerated {len(ip_list)} IP addresses.")

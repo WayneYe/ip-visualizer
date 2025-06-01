@@ -17,7 +17,48 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage>=7.8.2",
+    "pyright>=1.1.401",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
     "ruff>=0.11.12",
 ]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+lint.select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C",   # flake8-comprehensions
+    "PL",  # pylint
+    "RUF", # Ruff-specific
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "A",   # flake8-builtins
+    "S",   # flake8-bandit (security)
+]
+[tool.ruff.format]
+quote-style = "double"
+line-ending = "auto"
+indent-style = "space"
+docstring-code-format = true
+
+[tool.pyright]
+pythonVersion = "3.12"
+pythonPlatform = "All"
+typeCheckingMode = "strict"
+useLibraryCodeForTypes = true
+strictListInference = true
+strictDictionaryInference = true
+strictSetInference = true
+reportOptionalSubscript = true
+reportOptionalMemberAccess = true
+reportOptionalCall = true
+reportOptionalIterable = true
+reportOptionalOperand = true
+reportOptionalContextManager = true
+
+include = ["src"]
+exclude = ["**/__pycache__", "**/.*", "**/tests"]
