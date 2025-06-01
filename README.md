@@ -2,6 +2,9 @@
 
 This project visualizes IP addresses from a CSV file on an interactive geographical map, showing the distribution and concentration of IP addresses across different regions. It also includes utilities for generating random IP addresses for testing purposes.
 
+# Screenshot
+<img width="1035" alt="image" src="https://github.com/user-attachments/assets/18537ecf-6acd-4995-9935-398b76cd1676" />
+
 ## Prerequisites
 
 - Python 3.12 or higher
