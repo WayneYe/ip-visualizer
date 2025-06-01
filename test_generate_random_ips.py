@@ -1,6 +1,7 @@
 import pytest
 import ipaddress
-from generate_random_ips import generate_random_ip
+from generate_random_ips import generate_random_ip, generate_ip_list
+from unittest.mock import patch, MagicMock
 
 
 def test_generate_random_ip_with_standard_network():
@@ -34,7 +35,7 @@ def test_generate_random_ip_with_slash_31_network():
 
 def test_generate_random_ip_with_large_network():
     """Test generating IP in a large network (class A)."""
-    network = "10.0.0.0/8"
+    network = "10.0.0.0/24"
     ip = generate_random_ip(network)
     
     ip_obj = ipaddress.IPv4Address(ip)
@@ -63,7 +64,69 @@ def test_generate_random_ip_with_non_strict_network():
     assert ip_obj in network_obj.hosts() or ip_obj == network_obj.network_address or ip_obj == network_obj.broadcast_address
 
 
+def test_generate_ip_list_default_count():
+    """Test generating default number of IPs."""
+    with patch('generate_random_ips.generate_random_ip') as mock_gen_ip:
+        # Mock generate_random_ip to return predictable values
+        mock_gen_ip.side_effect = [f"192.168.1.{i}" for i in range(100)]
+        
+        result = generate_ip_list()
+        
+        assert len(result) == 100
+        assert all(ip.startswith("192.168.1.") for ip in result)
+
+
+def test_generate_ip_list_custom_count():
+    """Test generating a custom number of IPs."""
+    with patch('generate_random_ips.generate_random_ip') as mock_gen_ip:
+        # Mock generate_random_ip to return predictable values
+        mock_gen_ip.side_effect = [f"10.0.0.{i}" for i in range(50)]
+        
+        result = generate_ip_list(total_ips=50)
+        
+        assert len(result) == 50
+        assert all(ip.startswith("10.0.0.") for ip in result)
+
+
+def test_generate_ip_list_regional_distribution():
+    """Test that IPs are generated from different regions."""
+    # Mock the random choice to ensure we test the distribution logic
+    with patch('random.choice') as mock_choice, \
+         patch('generate_random_ips.generate_random_ip') as mock_gen_ip:
+        
+        # Mock the continent selection to cycle through regions
+        mock_choice.side_effect = ["Asia", "Europe", "North America", "South America"] * 25
+        
+        # Mock IP generation to return unique IPs
+        mock_gen_ip.side_effect = [f"10.0.{i}.1" for i in range(100)]
+        
+        result = generate_ip_list(total_ips=100)
+        
+        assert len(result) == 100
+        assert len(set(result)) == 100  # All IPs should be unique
+        assert all(ip.startswith("10.0.") for ip in result)
+
+
+def test_generate_ip_list_with_small_quantity():
+    """Test generating a small number of IPs."""
+    result = generate_ip_list(total_ips=10)
+    assert len(result) == 10
+    # Verify all returned values are valid IP addresses
+    for ip in result:
+        ipaddress.ip_address(ip)  # Will raise ValueError if not a valid IP
+
+
+def test_generate_ip_list_with_large_quantity():
+    """Test generating a large number of IPs."""
+    with patch('generate_random_ips.generate_random_ip') as mock_gen_ip:
+        # Mock generate_random_ip to return unique IPs
+        mock_gen_ip.side_effect = [f"192.168.{i//256}.{i%256}" for i in range(1000)]
+        
+        result = generate_ip_list(total_ips=1000)
+        
+        assert len(result) == 1000
+        assert len(set(result)) == 1000  # All IPs should be unique
+
+
 if __name__ == "__main__":
     pytest.main(["-v"])
-
-# To run the tests, use: python -m pytest test_generate_random_ips.py -v

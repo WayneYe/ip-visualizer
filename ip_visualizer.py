@@ -58,7 +58,8 @@ def create_heatmap(locations, ip_counts):
 
     # Add heatmap layer
     heat_data = [[lat, lon, count] for (lat, lon), count in ip_counts.items()]
-    HeatMap(heat_data).add_to(m)
+    heat_map = HeatMap(heat_data)
+    heat_map.add_to(m)
 
     # Save the map
     m.save("ip_heatmap.html")

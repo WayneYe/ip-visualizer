@@ -8,3 +8,17 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Coverage reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Local development
+.env
+*.log
