@@ -1,7 +1,8 @@
-import pytest
-from unittest.mock import patch, MagicMock, mock_open
-from ip_visualizer.core.ip_visualizer import load_ip_data_from_csv, get_ip_locations, create_heatmap
+from unittest.mock import MagicMock, mock_open, patch
 
+import pytest
+
+from ip_visualizer.core.ip_visualizer import create_heatmap, get_ip_locations, load_ip_data_from_csv
 
 # Test data
 TEST_CSV_DATA = """_source.cg.detail.remote_addr,other_field

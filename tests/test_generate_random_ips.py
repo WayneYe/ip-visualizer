@@ -1,7 +1,9 @@
-import pytest
 import ipaddress
-from ip_visualizer.core.ip_generator import generate_random_ip, generate_ip_list
 from unittest.mock import patch
+
+import pytest
+
+from ip_visualizer.core.ip_generator import generate_ip_list, generate_random_ip
 
 
 def test_generate_random_ip_with_standard_network():

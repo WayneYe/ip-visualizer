@@ -1,5 +1,5 @@
-import random
 import ipaddress
+import random
 import sys
 
 
@@ -13,10 +13,10 @@ def generate_random_ip(network_prefix: str):
 
     # Generate a random integer within the valid host range (excluding network and broadcast addresses)
     # If the network only has 1 or 2 possible addresses (like /31 or /32), handle it
-    if network.num_addresses <= 2:
+    if network.num_addresses <= 2:  # noqa: PLR2004
         random_ip_int = network_int
     else:
-        random_ip_int = random.randint(network_int + 1, broadcast_int - 1)
+        random_ip_int = random.randint(network_int + 1, broadcast_int - 1)  # noqa: S311
 
     return str(ipaddress.ip_address(random_ip_int))
 
@@ -211,7 +211,7 @@ def generate_ip_list(total_ips: int = 100) -> list[str]:
             continue
 
         for _ in range(count):
-            selected_range = random.choice(ip_ranges[region])
+            selected_range = random.choice(ip_ranges[region])  # noqa: S311
             try:
                 ip_addresses.append(generate_random_ip(selected_range))
             except ValueError as e:

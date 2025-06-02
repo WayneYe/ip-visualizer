@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import geoip2.database
-import sys
 import json
+import sys
+
+import geoip2.database
 
 
 def lookup_ip(ip: str) -> dict[str, str | float | None]:
@@ -20,12 +21,13 @@ def lookup_ip(ip: str) -> dict[str, str | float | None]:
                 "continent": response.continent.name,
             }
     except Exception as e:
-        print(f"Error looking up IP {ip}: {str(e)}")
+        print(f"Error looking up IP {ip}: {e!s}")
         return {}
 
 
+REQUIRED_ARG_COUNT = 2
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) != REQUIRED_ARG_COUNT:
         print("Usage: python ip_lookup.py <ip_address>")
         print("Example: python ip_lookup.py 8.8.8.8")
         sys.exit(1)

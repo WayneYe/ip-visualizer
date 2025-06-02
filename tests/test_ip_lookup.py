@@ -1,8 +1,9 @@
-from token import EQUAL
-import pytest
+from unittest.mock import MagicMock, patch
+
 import geoip2.database
 import geoip2.errors
-from unittest.mock import patch, MagicMock
+import pytest
+
 from ip_visualizer.core.ip_lookup import lookup_ip
 
 

@@ -1,7 +1,8 @@
 """Command-line interface for IP Visualizer."""
 
-import typer
 from pprint import pprint
+
+import typer
 
 app = typer.Typer(help="IP Visualizer - Visualize IP addresses on a map.")
 

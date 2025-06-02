@@ -7,11 +7,13 @@
 # "geoip2==5.1.0",
 # ]
 # ///
-import pandas as pd
-import folium
-from folium.plugins import HeatMap
-import geoip2.database
 from collections import defaultdict
+
+import folium
+import geoip2.database
+import pandas as pd
+from folium.plugins import HeatMap
+
 from ip_visualizer.core.ip_generator import generate_ip_list
 
 
@@ -41,7 +43,7 @@ def get_ip_locations(ip_addresses: list[list[float]]) -> list[list[float]]:
                         locations.append([lat, lon])
                         ip_counts[(lat, lon)] += 1
                 except Exception as e:
-                    print(f"Error looking up IP {ip}: {str(e)}")
+                    print(f"Error looking up IP {ip}: {e!s}")
                     continue
     except FileNotFoundError:
         print("Error: GeoLite2-City.mmdb not found. Please download it from MaxMind.")

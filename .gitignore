@@ -22,3 +22,6 @@ htmlcov/
 # Local development
 .env
 *.log
+
+# Generated heatmap.html
+ip_heatmap.html
