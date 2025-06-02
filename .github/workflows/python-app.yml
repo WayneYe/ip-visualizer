@@ -33,25 +33,13 @@ jobs:
       run: |
         uv sync
         source .venv/bin/activate
-    - name: ruff-action
-      # You may pin to the exact commit or the version.
-      # uses: astral-sh/ruff-action@eaf0ecdd668ceea36159ff9d91882c9795d89b49
-      uses: astral-sh/ruff-action@v3.4.0
-      with:
-        # Arguments passed to Ruff. Use `ruff --help` to see available options. Defaults to `check`.
-        args: check
-        # Source to run Ruff. Defaults to the current directory.
-        src: ${{ github.workspace }}
-        # The version of Ruff to use, e.g., `0.6.0` Defaults to the version in pyproject.toml or 'latest'.
-        # version: # optional, default is 
-        # Path to a pyproject.toml or requirements.txt file to read the version from.
-        version-file: pyproject.toml
-        # The checksum of the ruff version to install
-        # checksum: # optional
-        # Used to increase the rate limit when retrieving versions and downloading ruff.
-        # github-token: # optional, default is ${{ github.token }}
+    
+    - name: Run ruff check
+      run: make lint
+
     - name: Run type checking
       run: make typecheck
+
     - name: Test with pytest
       run: |
         make test-cov
