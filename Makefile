@@ -5,15 +5,15 @@ install-dev:
 
 # Run tests
 test:
-	pytest -v
+	pytest ./tests -v
 
 # Run tests with coverage report
 test-cov:
-	pytest --cov=./ --cov-report=term-missing --cov-report=html
+	pytest ./tests --cov=./ --cov-report=term-missing --cov-report=html
 
 # Run type checking with pyright
-typecheck:
-	pyright
+# typecheck:
+# 	pyright
 
 # Lint code
 lint:

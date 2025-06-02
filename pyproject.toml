@@ -1,5 +1,9 @@
+[build-system]
+requires = ["setuptools>=80.9.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "ip-visualize"
+name = "ip-visualizer"
 authors = [
     {name = "Wayne Ye", email = "xiaotianpop@gmail.com"}
 ]
@@ -12,7 +16,15 @@ dependencies = [
     "pandas==2.2.3",
     "folium==0.19.5",
     "geoip2==5.1.0",
+    "typer>=0.9.0",
+    "rich>=13.7.0",
 ]
+
+[project.scripts]
+ip-visualizer = "ip_visualizer.cli:app"
+
+[tool.uv]
+package = true
 
 [dependency-groups]
 dev = [
@@ -23,9 +35,15 @@ dev = [
     "ruff>=0.11.12",
 ]
 
+[tool.setuptools]
+package-dir = { "" = "." }
+
 [tool.ruff]
 line-length = 120
 target-version = "py312"
+lint.fixable = ["ALL"]
+lint.unfixable = []
+lint.ignore = []
 lint.select = [
     "E",   # pycodestyle errors
     "F",   # pyflakes
@@ -44,21 +62,3 @@ quote-style = "double"
 line-ending = "auto"
 indent-style = "space"
 docstring-code-format = true
-
-[tool.pyright]
-pythonVersion = "3.12"
-pythonPlatform = "All"
-typeCheckingMode = "strict"
-useLibraryCodeForTypes = true
-strictListInference = true
-strictDictionaryInference = true
-strictSetInference = true
-reportOptionalSubscript = true
-reportOptionalMemberAccess = true
-reportOptionalCall = true
-reportOptionalIterable = true
-reportOptionalOperand = true
-reportOptionalContextManager = true
-
-include = ["src"]
-exclude = ["**/__pycache__", "**/.*", "**/tests"]

@@ -12,17 +12,17 @@ import folium
 from folium.plugins import HeatMap
 import geoip2.database
 from collections import defaultdict
-from generate_random_ips import generate_ip_list
+from ip_visualizer.core.ip_generator import generate_ip_list
 
 
-def load_ip_data(csv_file):
+def load_ip_data_from_csv(csv_file: str) -> list[str]:
     """Load IP addresses from CSV file."""
     print("Loading data from CSV...")
     df = pd.read_csv(csv_file)
     return df["_source.cg.detail.remote_addr"].dropna().unique()
 
 
-def get_ip_locations(ip_addresses):
+def get_ip_locations(ip_addresses: list[list[float]]) -> list[list[float]]:
     """Convert IP addresses to geographical coordinates using MaxMind GeoLite2 database."""
     print("Converting IPs to locations...")
     locations = []
@@ -31,7 +31,7 @@ def get_ip_locations(ip_addresses):
     # You'll need to download the GeoLite2 database from MaxMind
     # https://dev.maxmind.com/geoip/geolite2-free-geolocation-data
     try:
-        with geoip2.database.Reader("GeoLite2-City.mmdb") as reader:
+        with geoip2.database.Reader("./data/GeoLite2-City.mmdb") as reader:
             for ip in ip_addresses:
                 try:
                     response = reader.city(ip)
@@ -45,12 +45,11 @@ def get_ip_locations(ip_addresses):
                     continue
     except FileNotFoundError:
         print("Error: GeoLite2-City.mmdb not found. Please download it from MaxMind.")
-        return None, None
 
     return locations, ip_counts
 
 
-def create_heatmap(locations, ip_counts):
+def create_heatmap(locations: list[list[float]], ip_counts: dict[tuple[float, float], int]):
     """Create an interactive heatmap using Folium."""
     print("Creating heatmap...")
     # Create a map centered at a default location

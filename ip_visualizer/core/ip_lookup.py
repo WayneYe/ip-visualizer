@@ -2,13 +2,12 @@
 import geoip2.database
 import sys
 import json
-from typing import Optional
 
 
-def lookup_ip(ip: str) -> Optional[dict]:
+def lookup_ip(ip: str) -> dict[str, str | float | None]:
     """Look up an IP address in the GeoLite2 database."""
     try:
-        with geoip2.database.Reader("GeoLite2-City.mmdb") as reader:
+        with geoip2.database.Reader("./data/GeoLite2-City.mmdb") as reader:
             response = reader.city(ip)
             return {
                 "ip": ip,
@@ -22,7 +21,7 @@ def lookup_ip(ip: str) -> Optional[dict]:
             }
     except Exception as e:
         print(f"Error looking up IP {ip}: {str(e)}")
-        return None
+        return {}
 
 
 def main():

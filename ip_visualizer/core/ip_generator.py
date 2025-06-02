@@ -1,8 +1,9 @@
 import random
 import ipaddress
+import sys
 
 
-def generate_random_ip(network_prefix):
+def generate_random_ip(network_prefix: str):
     """Generates a random IP address within a given network prefix."""
     network = ipaddress.ip_network(network_prefix, strict=False)
     # Get the integer representation of the network address
@@ -20,11 +21,11 @@ def generate_random_ip(network_prefix):
     return str(ipaddress.ip_address(random_ip_int))
 
 
-def generate_ip_list(total_ips=100):
+def generate_ip_list(total_ips: int = 100) -> list[str]:
     """
     Generates a list of IP addresses with a specified regional distribution.
     """
-    ip_addresses = []
+    ip_addresses: list[str] = []
 
     # Define approximate IP ranges for each continent.
     # These are illustrative and not exhaustive or strictly geolocated.
@@ -223,12 +224,17 @@ def generate_ip_list(total_ips=100):
     return ip_addresses
 
 
-if __name__ == "__main__":
+def main(count: int = 100):
     # Generate the list of 100 IP addresses
-    ip_list = generate_ip_list(total_ips=100)
+    ip_list = generate_ip_list(total_ips=count)
 
     # Print the generated IP addresses
     for i, ip in enumerate(ip_list):
-        print(f"{i + 1}. {ip}")
+        print(f"{i + 1}-> {ip}")
 
     print(f"\nGenerated {len(ip_list)} IP addresses.")
+
+
+if __name__ == "__main__":
+    count = int(sys.argv[1])
+    main(count)

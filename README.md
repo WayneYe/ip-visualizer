@@ -26,14 +26,20 @@ This project visualizes IP addresses from a CSV file on an interactive geographi
    - Download the GeoLite2 City database (GeoLite2-City.mmdb)
    - Place the downloaded file in the project root directory
 
+3. Install the CLI:
+   ```bash
+   uv pip install -e .
+   ```
+
 ## Usage
 
-1. Ensure your CSV file is in the project directory
-2. Run the visualization script:
+1. Run the visualization script:
    ```bash
-   python ip_visualizer.py
+   ip-visualizer --help
    ```
-3. Open the generated `ip_heatmap.html` file in a web browser to view the interactive map
+2. Open the generated `ip_heatmap.html` file in a web browser to view the interactive map
+
+> The demo application visualize 100 random IP addresses to show the distribution of IP addresses across different regions.  You can put a CSV file which contains IP addresses to visualize the IP addresses on the map (use the `load_ip_data_from_csv` function defined in `ip_visualizer/core/visualizer.py`)).
 
 ## Output
 

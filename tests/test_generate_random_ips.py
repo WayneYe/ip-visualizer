@@ -1,6 +1,6 @@
 import pytest
 import ipaddress
-from generate_random_ips import generate_random_ip, generate_ip_list
+from ip_visualizer.core.ip_generator import generate_random_ip, generate_ip_list
 from unittest.mock import patch
 
 
@@ -78,7 +78,7 @@ def test_generate_random_ip_with_non_strict_network():
 
 def test_generate_ip_list_default_count():
     """Test generating default number of IPs."""
-    with patch("generate_random_ips.generate_random_ip") as mock_gen_ip:
+    with patch("ip_visualizer.core.ip_generator.generate_random_ip") as mock_gen_ip:
         # Mock generate_random_ip to return predictable values
         mock_gen_ip.side_effect = [f"192.168.1.{i}" for i in range(100)]
 
@@ -90,7 +90,7 @@ def test_generate_ip_list_default_count():
 
 def test_generate_ip_list_custom_count():
     """Test generating a custom number of IPs."""
-    with patch("generate_random_ips.generate_random_ip") as mock_gen_ip:
+    with patch("ip_visualizer.core.ip_generator.generate_random_ip") as mock_gen_ip:
         # Mock generate_random_ip to return predictable values
         mock_gen_ip.side_effect = [f"10.0.0.{i}" for i in range(50)]
 
@@ -105,7 +105,7 @@ def test_generate_ip_list_regional_distribution():
     # Mock the random choice to ensure we test the distribution logic
     with (
         patch("random.choice") as mock_choice,
-        patch("generate_random_ips.generate_random_ip") as mock_gen_ip,
+        patch("ip_visualizer.core.ip_generator.generate_random_ip") as mock_gen_ip,
     ):
         # Mock the continent selection to cycle through regions
         mock_choice.side_effect = [
@@ -136,7 +136,7 @@ def test_generate_ip_list_with_small_quantity():
 
 def test_generate_ip_list_with_large_quantity():
     """Test generating a large number of IPs."""
-    with patch("generate_random_ips.generate_random_ip") as mock_gen_ip:
+    with patch("ip_visualizer.core.ip_generator.generate_random_ip") as mock_gen_ip:
         # Mock generate_random_ip to return unique IPs
         mock_gen_ip.side_effect = [f"192.168.{i // 256}.{i % 256}" for i in range(1000)]
 

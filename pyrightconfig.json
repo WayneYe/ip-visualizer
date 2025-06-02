@@ -1,0 +1,6 @@
+{
+    "include": ["ip_visualizer"],
+    "exclude": ["**/__pycache__", "**/.*", "**/tests"],
+    "pythonVersion": "3.12",
+    "typeCheckingMode": "strict"
+}

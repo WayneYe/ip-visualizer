@@ -1,8 +1,9 @@
+from token import EQUAL
 import pytest
 import geoip2.database
 import geoip2.errors
 from unittest.mock import patch, MagicMock
-from ip_lookup import lookup_ip
+from ip_visualizer.core.ip_lookup import lookup_ip
 
 
 class MockGeoIP2City:
@@ -94,7 +95,7 @@ def test_lookup_ip_not_found():
     """Test IP lookup with an IP not in the database."""
     with patch("geoip2.database.Reader", new=MockGeoIP2City):
         result = lookup_ip("192.0.2.0")  # Test-Net IP address
-        assert result is None
+        assert result == {}
 
 
 def test_lookup_ip_different_location():
@@ -116,7 +117,7 @@ def test_lookup_ip_database_error(mock_reader):
     mock_reader.return_value.__enter__.return_value.city.side_effect = Exception("Database read error")
 
     result = lookup_ip("8.8.8.8")
-    assert result is None
+    assert result == {}
 
 
 if __name__ == "__main__":

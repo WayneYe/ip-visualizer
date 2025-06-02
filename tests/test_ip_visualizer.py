@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock, mock_open
-from ip_visualizer import load_ip_data, get_ip_locations, create_heatmap
+from ip_visualizer.core.ip_visualizer import load_ip_data_from_csv, get_ip_locations, create_heatmap
 
 
 # Test data
@@ -30,7 +30,7 @@ def create_mock_geoip_response(ip):
     return mock_response
 
 
-def test_load_ip_data():
+def test_load_ip_data_from_csv():
     """Test loading IP addresses from a CSV file."""
     # Create a mock file object with our test data
     with patch("pandas.read_csv") as mock_read_csv:
@@ -43,7 +43,7 @@ def test_load_ip_data():
         mock_read_csv.return_value = mock_df
 
         # Call the function with a dummy filename
-        result = load_ip_data("dummy.csv")
+        result = load_ip_data_from_csv("dummy.csv")
 
         # Verify the result
         assert len(result) == 2
@@ -51,7 +51,7 @@ def test_load_ip_data():
         assert "1.1.1.1" in result
 
 
-@patch("ip_visualizer.geoip2.database.Reader")
+@patch("ip_visualizer.core.ip_visualizer.geoip2.database.Reader")
 def test_get_ip_locations_success(mock_reader):
     """Test successful IP to location conversion."""
     # Setup mock reader
@@ -78,7 +78,7 @@ def test_get_ip_locations_success(mock_reader):
     assert ip_counts[(37.40599, -122.078514)] == 1
 
 
-@patch("ip_visualizer.geoip2.database.Reader")
+@patch("ip_visualizer.core.ip_visualizer.geoip2.database.Reader")
 def test_get_ip_locations_invalid_ip(mock_reader):
     """Test handling of invalid IP addresses."""
     # Setup mock reader to raise an exception for invalid IPs
@@ -106,7 +106,7 @@ def test_create_heatmap():
     # Mock folium.Map and HeatMap
     with (
         patch("folium.Map") as mock_map,
-        patch("ip_visualizer.HeatMap", return_value=mock_heatmap_instance) as mock_heatmap,
+        patch("ip_visualizer.core.ip_visualizer.HeatMap", return_value=mock_heatmap_instance) as mock_heatmap,
     ):
         # Setup mock map
         mock_map_instance = MagicMock()
@@ -143,9 +143,9 @@ def test_main_with_mock_data(mock_read_csv, mock_file):
 
     # Mock the rest of the dependencies
     with (
-        patch("ip_visualizer.generate_ip_list") as mock_gen_ips,
-        patch("ip_visualizer.get_ip_locations") as mock_get_locations,
-        patch("ip_visualizer.create_heatmap") as mock_create_heatmap,
+        patch("ip_visualizer.core.ip_generator.generate_ip_list") as mock_gen_ips,
+        patch("ip_visualizer.core.ip_visualizer.get_ip_locations") as mock_get_locations,
+        patch("ip_visualizer.core.ip_visualizer.create_heatmap") as mock_create_heatmap,
         patch("sys.argv", ["ip_visualizer.py", "test.csv"]),
     ):
         # Setup mock return values
@@ -156,7 +156,7 @@ def test_main_with_mock_data(mock_read_csv, mock_file):
         )
 
         # Import and run main
-        from ip_visualizer import main
+        from ip_visualizer.core.ip_visualizer import main
 
         main()
 
